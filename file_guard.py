@@ -3,7 +3,6 @@ import os
 import json
 from datetime import datetime
 
-
 BASELINE_FILE = "baseline.json"
 REPORT_FILE = "fileguard_report.html"
 
