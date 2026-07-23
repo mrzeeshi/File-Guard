@@ -1,10 +1,14 @@
 # FileGuard
 
-## File Integrity Monitoring Tool
+### File Integrity Monitoring Tool
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
+[![Cybersecurity](https://img.shields.io/badge/Category-Cybersecurity-red)](https://github.com/mrzeeshi/File-Guard)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 FileGuard is a lightweight cybersecurity tool developed in Python for monitoring the integrity of files and folders.
 
-It uses **SHA-256 cryptographic hashing** to create a trusted baseline of files and later compares the current state of the folder against that baseline.
+It uses SHA-256 cryptographic hashing to create a trusted baseline of files and later compares the current state of the folder against that baseline.
 
 FileGuard can detect:
 
@@ -13,7 +17,7 @@ FileGuard can detect:
 * Newly created files
 * Deleted files
 
-It also provides scan statistics, severity classification, user confirmation for baseline updates, and a visual HTML security report.
+The tool also provides scan statistics, severity classification, user confirmation for baseline updates, and a visual HTML security report.
 
 ---
 
@@ -23,11 +27,11 @@ It also provides scan statistics, severity classification, user confirmation for
 
 FileGuard calculates a SHA-256 hash for every monitored file.
 
-A hash acts as a digital fingerprint of the file. If the contents of a file change, its SHA-256 hash will normally also change.
+A hash acts as a digital fingerprint of a file. If the contents of a file change, its SHA-256 hash will normally also change.
 
 ### Recursive Folder Scanning
 
-FileGuard can scan a folder and all of its subfolders.
+FileGuard scans the selected folder and its subfolders recursively.
 
 Example:
 
@@ -60,6 +64,8 @@ If a file exists during the current scan but does not exist in the baseline, it 
 NEW
 ```
 
+The user is then asked whether the hash of the new file should be added to the baseline.
+
 ### Deleted File Detection
 
 If a file exists in the baseline but is missing during the current scan, it is classified as:
@@ -68,25 +74,24 @@ If a file exists in the baseline but is missing during the current scan, it is c
 DELETED
 ```
 
+The user is asked whether the deletion was intentional. If the user confirms the deletion, the file is removed from the baseline. Otherwise, it remains in the baseline as a possible unauthorized deletion.
+
 ### User Confirmation
 
-FileGuard asks the user whether:
+FileGuard asks the user to confirm important changes before updating the trusted baseline.
 
-* A new file should be added to the baseline.
-* A deleted file was intentionally deleted.
-
-This prevents the tool from automatically trusting every change.
+This helps prevent the tool from automatically trusting every detected change.
 
 ### Severity Classification
 
 The tool calculates an overall security status based on the detected changes.
 
-| Severity | Description                                                       |
-| -------- | ----------------------------------------------------------------- |
-| LOW      | No changes detected                                               |
-| MEDIUM   | New or deleted files detected                                     |
-| HIGH     | Existing files have been modified                                 |
-| CRITICAL | Multiple significant changes, such as modifications and deletions |
+| Severity | Description                                  |
+| -------- | -------------------------------------------- |
+| LOW      | No changes detected                          |
+| MEDIUM   | New or deleted files detected                |
+| HIGH     | Existing files have been modified            |
+| CRITICAL | Both modified and deleted files are detected |
 
 ### HTML Security Report
 
@@ -137,139 +142,107 @@ FileGuard requires:
 * Python 3.8 or newer
 * Git
 
-The project primarily uses Python's standard library, so no external Python packages are required.
+The project uses Python's standard library and does not require external Python packages.
 
 ---
 
 # Installation
 
-## 1. Clone the Repository
+## Clone the Repository
 
-Open your terminal or command prompt and run:
+Open a terminal or command prompt and run:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/mrzeeshi/File-Guard.git
 ```
 
-Replace `YOUR_GITHUB_REPOSITORY_URL` with the actual URL of your GitHub repository.
+This will create a folder named:
 
-Example:
-
-```bash
-git clone https://github.com/your-username/fileguard.git
+```text
+File-Guard
 ```
 
 Move into the project directory:
 
 ```bash
-cd fileguard
+cd File-Guard
 ```
 
 ---
 
-# Windows Installation
+# Running FileGuard
 
-## Command Prompt
+## Windows
 
-Open Command Prompt and run:
+Open Command Prompt or PowerShell inside the `File-Guard` folder and run:
 
-```cmd
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd fileguard
+```bash
+python file_guard.py
 ```
 
-Check whether Python is installed:
-
-```cmd
-python --version
-```
-
-Run the program:
-
-```cmd
-python main.py
-```
-
-## PowerShell
-
-Open PowerShell and run:
-
-```powershell
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd fileguard
-python main.py
-```
-
----
-
-# Linux Installation
+## Linux
 
 Open the terminal and run:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd fileguard
+python3 file_guard.py
 ```
 
-Check the Python version:
-
-```bash
-python3 --version
-```
-
-Run the program:
-
-```bash
-python3 main.py
-```
-
-On some Linux systems, the following command may also work:
-
-```bash
-python main.py
-```
-
----
-
-# macOS Installation
+## macOS
 
 Open Terminal and run:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd fileguard
+python3 file_guard.py
 ```
 
-Check the Python version:
+If `python3` is not available, try:
 
 ```bash
-python3 --version
-```
-
-Run the program:
-
-```bash
-python3 main.py
+python file_guard.py
 ```
 
 ---
 
-# Usage
+# Quick Start
 
-After starting the program, FileGuard provides the available options.
+```bash
+git clone https://github.com/mrzeeshi/File-Guard.git
+cd File-Guard
+python file_guard.py
+```
 
-Example:
+On Linux and macOS:
+
+```bash
+git clone https://github.com/mrzeeshi/File-Guard.git
+cd File-Guard
+python3 file_guard.py
+```
+
+After launching the program:
+
+1. Select the required operation.
+2. Provide the complete path of the folder to monitor.
+3. Create a baseline or scan an existing baseline.
+4. Review the detected changes.
+5. Confirm legitimate new or deleted files when prompted.
+6. Review the generated HTML security report.
+
+---
+
+# Program Options
+
+When the program starts, it provides two options:
 
 ```text
-====================================
-          FILEGUARD
-  FILE INTEGRITY MONITORING TOOL
-====================================
+========================================
+             FILEGUARD
+     File Integrity Monitoring Tool
+========================================
 
 1. Create Baseline
 2. Scan Folder
-
-Enter your choice:
 ```
 
 ---
@@ -278,7 +251,7 @@ Enter your choice:
 
 A baseline represents the trusted state of a folder.
 
-Select the baseline creation option and provide the folder path.
+When creating a baseline, provide the complete path of the folder that you want to monitor.
 
 Example on Windows:
 
@@ -298,25 +271,29 @@ Example on macOS:
 /Users/user/Documents/ImportantFiles
 ```
 
-FileGuard scans the folder and calculates a SHA-256 hash for every file.
+FileGuard scans the folder and all of its subfolders. It calculates a SHA-256 hash for every file and stores the results in:
 
-The baseline is then stored.
+```text
+baseline.json
+```
 
 Example:
 
-```text
-Baseline created successfully.
-
-Files scanned: 25
+```json
+{
+    "file1.txt": "sha256_hash_value",
+    "Documents/report.pdf": "sha256_hash_value",
+    "Images/photo.jpg": "sha256_hash_value"
+}
 ```
 
 ---
 
 # Scanning a Folder
 
-After a baseline has been created, run the scan option.
+After creating a baseline, select the scan option.
 
-FileGuard will:
+The tool will:
 
 1. Scan the selected folder.
 2. Calculate current hashes.
@@ -324,31 +301,33 @@ FileGuard will:
 4. Compare current hashes with baseline hashes.
 5. Detect changes.
 6. Classify the results.
-7. Generate the security report.
+7. Ask for confirmation where required.
+8. Update the baseline when confirmed.
+9. Generate a security report.
 
 Example output:
 
 ```text
-====================================
-        FILEGUARD SCAN RESULTS
-====================================
+========================================
+        FILEGUARD SECURITY SCAN
+========================================
 
-[UNCHANGED] report.pdf
-[MODIFIED]  config.txt
-[NEW]       suspicious.exe
-[DELETED]   old_file.docx
+[UNCHANGED]  report.pdf
+[MODIFIED]   config.txt
+[NEW]        new_file.txt
+[DELETED]    old_file.docx
 
-====================================
-           SCAN SUMMARY
-====================================
+========================================
+              SCAN SUMMARY
+========================================
 
-Total files checked: 25
-Unchanged files: 22
-Modified files: 1
-New files: 1
-Deleted files: 1
-
-Security Status: CRITICAL
+Files checked: 25
+Unchanged:     22
+Modified:      1
+New:           1
+Deleted:       1
+Severity:      CRITICAL
+========================================
 ```
 
 ---
@@ -368,7 +347,7 @@ test_folder/
 
 ## Test 1: Unchanged File
 
-1. Create the baseline.
+1. Create a baseline.
 2. Do not change anything.
 3. Run the scan.
 
@@ -410,7 +389,13 @@ Expected result:
 [NEW] new_file.txt
 ```
 
-The tool will ask whether the new file should be added to the baseline.
+The tool will ask:
+
+```text
+Do you want to save the hash of this new file? (y/n):
+```
+
+If the user enters `y`, the file's hash is added to the baseline.
 
 ---
 
@@ -426,34 +411,63 @@ Expected result:
 [DELETED] file2.txt
 ```
 
-The tool will ask whether the deletion was intentional.
+The tool will ask:
+
+```text
+Did you intentionally delete this file? (y/n):
+```
+
+If the user enters `y`, the file is removed from the baseline.
+
+If the user enters `n`, the file remains in the baseline and the deletion is treated as a possible unauthorized deletion.
 
 ---
 
-# Baseline File
+# Generated Files
 
-The baseline stores the relative path and SHA-256 hash of each file.
+FileGuard automatically creates and updates the following files during operation.
+
+## baseline.json
+
+This file stores the trusted baseline of the monitored folder.
+
+It contains:
+
+* Relative file paths
+* SHA-256 hashes
 
 Example:
 
 ```json
 {
     "file1.txt": "sha256_hash_value",
-    "Documents/report.pdf": "sha256_hash_value",
-    "Images/photo.jpg": "sha256_hash_value"
+    "Documents/report.pdf": "sha256_hash_value"
 }
 ```
 
-The relative path is used instead of only the filename so that files with identical names in different folders can be distinguished.
+When a new baseline is created, the file is generated or overwritten.
 
-For example:
+During scanning, the file may be updated when the user confirms new files or intentional deletions.
 
-```text
-Folder1/report.pdf
-Folder2/report.pdf
-```
+---
 
-These are treated as two different files.
+## fileguard_report.html
+
+This file is automatically generated after a scan.
+
+It contains:
+
+* Scan time
+* Monitored folder
+* Number of files checked
+* Unchanged file count
+* Modified file count
+* New file count
+* Deleted file count
+* Overall security severity
+* Detailed security findings
+
+The report can be opened directly in a web browser.
 
 ---
 
@@ -511,18 +525,26 @@ Future versions could improve this by storing the original absolute folder path 
 
 # Project Structure
 
-A typical project structure is:
-
 ```text
-FileGuard/
-├── main.py
+File-Guard/
+├── file_guard.py
 ├── baseline.json
-├── report.html
-├── README.md
-└── LICENSE
+├── fileguard_report.html
+├── Report File Guard.pdf
+└── README.md
 ```
 
-The exact structure may vary depending on the implementation.
+## File Descriptions
+
+| File                    | Description                                         |
+| ----------------------- | --------------------------------------------------- |
+| `file_guard.py`         | Main Python source code                             |
+| `baseline.json`         | Stores trusted file paths and SHA-256 hashes        |
+| `fileguard_report.html` | Generated visual security report                    |
+| `Report File Guard.pdf` | Complete project report and technical documentation |
+| `README.md`             | Project documentation and usage instructions        |
+
+> `baseline.json` and `fileguard_report.html` are generated and updated automatically by the program during operation.
 
 ---
 
@@ -643,7 +665,13 @@ Possible future improvements include:
 
 # Project Documentation
 
-The project includes a complete project report explaining:
+The complete project report is included in the repository:
+
+```text
+Report File Guard.pdf
+```
+
+The report explains:
 
 * The objective
 * Problem statement
@@ -730,57 +758,11 @@ When reporting a problem, include:
 
 ---
 
-# Quick Start
+# Repository
 
-For Windows:
+The complete source code and project documentation are available on GitHub:
 
-```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd fileguard
-python main.py
-```
-
-For Linux and macOS:
-
-```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd fileguard
-python3 main.py
-```
-
-Then:
-
-1. Create a baseline.
-2. Modify, add, or delete files for testing.
-3. Run a scan.
-4. Review the detected changes.
-5. Open the generated HTML security report.
-
----
-
-# Example Workflow
-
-```text
-1. Clone Repository
-        ↓
-2. Enter Project Directory
-        ↓
-3. Run FileGuard
-        ↓
-4. Create Baseline
-        ↓
-5. Files Are Hashed
-        ↓
-6. Files Are Modified, Added, or Deleted
-        ↓
-7. Run Scan
-        ↓
-8. Changes Are Detected
-        ↓
-9. Severity Is Calculated
-        ↓
-10. HTML Report Is Generated
-```
+https://github.com/mrzeeshi/File-Guard
 
 ---
 
